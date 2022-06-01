@@ -7,6 +7,8 @@ import {
 } from '../../utils/FormUtils';
 import './Landing.css';
 
+const BASE_URL = `https://bonufo-express.vercel.app/`;
+
 function Landing(props) {
 
   const [action, setAction] = useState('LOGIN');
@@ -72,7 +74,7 @@ function Landing(props) {
         password: registerFormData.password,
         role: roleStr,
       }
-      axios.post('/user/signup', requestBody)
+      axios.post(`${BASE_URL}/user/signup`, requestBody)
         .then(res => {
           if (res.data) {
             requestLogin(requestBody);
@@ -165,7 +167,7 @@ function Landing(props) {
   }
 
   let requestLogin = (requestBody: LoginFormRequestBody) => {
-    axios.post('/user/login', requestBody)
+    axios.post(`${BASE_URL}/user/login`, requestBody)
       .then(res => {
         props.handleSuccessLogin(res.data.accessToken);
       })

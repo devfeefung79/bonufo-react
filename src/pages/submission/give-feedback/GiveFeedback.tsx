@@ -11,6 +11,8 @@ import { useHistory, useParams } from "react-router-dom";
 import { Button, Table, Form, Input, Icon, Segment, Grid, GridColumn, TextArea } from 'semantic-ui-react';
 import './GiveFeedback.css';
 
+const BASE_URL = `https://bonufo-express.vercel.app/`;
+
 function GiveFeedback(props) {
 
   let history = useHistory();
@@ -25,13 +27,13 @@ function GiveFeedback(props) {
   }, []);
 
   let getCurrEssay = (id: string) => {
-    axios.get(`/essay/${id}`, {
+    axios.get(`${BASE_URL}/essay/${id}`, {
       headers: { "Authorization": `Bearer ${props.user.accessToken}` }
     })
       .then(res => {
         setCurrentEssay(res.data);
         if (res.data.markingSchemeId && res.data.markingSchemeId !== '') {
-          axios.get(`/essay/marking-scheme/${res.data.markingSchemeId}`)
+          axios.get(`${BASE_URL}/essay/marking-scheme/${res.data.markingSchemeId}`)
             .then(res => {
               setCurrentMarkingScheme(res.data);
               setMarkingForm({ ...markingForm, sections: res.data.sections });

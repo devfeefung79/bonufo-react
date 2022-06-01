@@ -6,6 +6,8 @@ import { useHistory, useParams } from "react-router-dom";
 import { Button, Table, Form, Accordion, Icon, Segment } from 'semantic-ui-react';
 import './WriteEssay.css';
 
+const BASE_URL = `https://bonufo-express.vercel.app/`;
+
 interface WriteEssayForm {
   currentMarkingScheme: MarkingSchemeModel;
   responseText: string;
@@ -36,7 +38,7 @@ function WriteEssay(props) {
   }, []);
 
   let getCurrQuestion = (id: string) => {
-    axios.get(`/question/${id}`, {
+    axios.get(`${BASE_URL}/question/${id}`, {
       headers: { "Authorization": `Bearer ${props.user.accessToken}` }
     })
       .then(res => {
@@ -45,7 +47,7 @@ function WriteEssay(props) {
   };
 
   let getAllMarkingScheme = () => {
-    axios.get(`/essay/marking-scheme/all`, {
+    axios.get(`${BASE_URL}/essay/marking-scheme/all`, {
       headers: { "Authorization": `Bearer ${props.user.accessToken}` }
     })
       .then(res => {
@@ -111,12 +113,12 @@ function WriteEssay(props) {
         content: writeEssayForm.responseText,
         wordCount: writeEssayForm.wordCount
       }
-      axios.post(`/essay/add`, newEssay, {
+      axios.post(`${BASE_URL}/essay/add`, newEssay, {
         headers: { "Authorization": `Bearer ${props.user.accessToken}` }
       })
         .then(res => {
           setPageControl({ ...pageControl, isFormLoading: false });
-          history.push(`/submission/${res.data._id}`);
+          history.push(`${BASE_URL}/submission/${res.data._id}`);
         })
         .catch((err) => {
           console.log(err.message);

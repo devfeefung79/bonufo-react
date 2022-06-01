@@ -7,6 +7,8 @@ import SavedQuestion from './saved-question/SavedQuestion';
 import SubmissionHistory from './submission-history/SubmissionHistory';
 import FeedbackHistory from './feedback-history/FeedbackHistory';
 
+const BASE_URL = `https://bonufo-express.vercel.app/`;
+
 function Profile(props) {
 
   const [pageControl, setPageControl] = useState({
@@ -33,7 +35,7 @@ function Profile(props) {
   }, []);
 
   let getSubmissionList = (userId: string) => {
-    axios.get(`/essay/by-user/${userId}`, {
+    axios.get(`${BASE_URL}/essay/by-user/${userId}`, {
       headers: { "Authorization": `Bearer ${props.user.accessToken}` }
     })
       .then(res => {
@@ -42,7 +44,7 @@ function Profile(props) {
   }
 
   let getfeedbackList = (userId: string) => {
-    axios.get(`/feedback/by-user/${userId}`, {
+    axios.get(`${BASE_URL}/feedback/by-user/${userId}`, {
       headers: { "Authorization": `Bearer ${props.user.accessToken}` }
     })
       .then(res => {
@@ -51,7 +53,7 @@ function Profile(props) {
   }
 
   let getSavedQuestion = (userId) => {
-    axios.get(`/question/saved-questions/${userId}`, {
+    axios.get(`${BASE_URL}/question/saved-questions/${userId}`, {
       headers: { "Authorization": `Bearer ${props.user.accessToken}` }
     })
       .then(res => {
@@ -60,7 +62,7 @@ function Profile(props) {
   }
 
   let unsaveQuestion = (userId: string, questionId: string) => {
-    axios.delete(`/question/unsave/${userId}/${questionId}`, {
+    axios.delete(`${BASE_URL}/question/unsave/${userId}/${questionId}`, {
       headers: { "Authorization": `Bearer ${props.user.accessToken}` }
     })
       .then(res => {

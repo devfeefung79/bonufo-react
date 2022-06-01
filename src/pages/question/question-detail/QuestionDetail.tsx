@@ -6,6 +6,8 @@ import { Segment, Divider, Button, Label, Placeholder, Image } from 'semantic-ui
 import EmptyListIcon from '../../../assets/bear-5846065_960_720.jpg';
 import './QuestionDetail.css';
 
+const BASE_URL = `https://bonufo-express.vercel.app/`;
+
 function QuestionDetail(props) {
 
   let { questionId } = useParams<{ questionId: string }>();
@@ -23,7 +25,7 @@ function QuestionDetail(props) {
 
   let getcurrentQuestion = async (id: string) => {
     await setPageControl({ ...pageControl, isLoadingQuestion: true });
-    axios.get(`/question/${id}`, {
+    axios.get(`${BASE_URL}/question/${id}`, {
       headers: { "Authorization": `Bearer ${props.user.accessToken}` }
     })
       .then(res => {
@@ -39,7 +41,7 @@ function QuestionDetail(props) {
 
   let getSubmissionList = async () => {
     await setPageControl({ ...pageControl, isLoadingSubmission: true });
-    axios.get(`/essay/by-question/${questionId}`, {
+    axios.get(`${BASE_URL}/essay/by-question/${questionId}`, {
       headers: { "Authorization": `Bearer ${props.user.accessToken}` }
     })
       .then(res => {

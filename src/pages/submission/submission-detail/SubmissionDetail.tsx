@@ -6,6 +6,8 @@ import { Placeholder, Segment, Button, Image, Divider, Grid } from 'semantic-ui-
 import EmptyListIcon from '../../../assets/bear-5846065_960_720.jpg';
 import './SubmissionDetail.css';
 
+const BASE_URL = `https://bonufo-express.vercel.app/`;
+
 function SubmissionDetail(props) {
 
   let { essayId } = useParams<{ essayId: string }>();
@@ -23,7 +25,7 @@ function SubmissionDetail(props) {
 
   let getCurrentEssay = async (id: string) => {
     await setPageControl({ ...pageControl, isLoadingEssay: true });
-    axios.get(`/essay/${id}`, {
+    axios.get(`${BASE_URL}/essay/${id}`, {
       headers: { "Authorization": `Bearer ${props.user.accessToken}` }
     })
       .then(res => {
@@ -39,7 +41,7 @@ function SubmissionDetail(props) {
 
   let getFeedbackList = async (id: string) => {
     await setPageControl({ ...pageControl, isLoadingFeedback: true });
-    axios.get(`/feedback/by-essay/${id}`, {
+    axios.get(`${BASE_URL}/feedback/by-essay/${id}`, {
       headers: { "Authorization": `Bearer ${props.user.accessToken}` }
     })
       .then(res => {

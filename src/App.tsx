@@ -16,6 +16,8 @@ import './App.css';
 import { UserControlModel, defaultUserControl } from './utils/UserUtils';
 import { Image } from 'semantic-ui-react'
 
+const BASE_URL = `https://bonufo-express.vercel.app/`;
+
 function App() {
 
   const [user, setUser] = useState<UserControlModel>(defaultUserControl);
@@ -37,7 +39,7 @@ function App() {
   }, [counter]);
 
   let getAccessToken = () => {
-    axios.get('/user/refresh', { withCredentials: true })
+    axios.get(`${BASE_URL}/user/refresh`, { withCredentials: true })
       .then(res => {
         let decodedUser: UserControlModel = jwt_decode(res.data.accessToken);
         decodedUser.accessToken = res.data.accessToken;
@@ -53,7 +55,7 @@ function App() {
   }
 
   let handleLogout = () => {
-    axios.get('/user/logout')
+    axios.get(`${BASE_URL}/user/logout`)
       .then(() => {
         setUser({ ...user, ...defaultUserControl, isValid: false });
       })
