@@ -1,0 +1,22 @@
+.empty-list-box {
+  text-align: center; 
+  min-height: 150px; 
+  padding: 10% 0%;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.empty-list-image {
+  display: block;
+  margin: 10px;
+  width: 250px !important;
+  height: 250px !important;
+}
+
+.empty-list-text {
+  display: block;
+  margin: 10px;
+  font-size: 20px;
+  color: #6a89b3;
+  font-family:'Merriweather', sans-serif;
+}

@@ -1,0 +1,81 @@
+.submission-heading-text {
+  color: #184270;
+  font-family: "Merriweather", sans-serif;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.submission-box {
+  margin-top: 15px;
+}
+
+.write-feedback-button-box {
+  width: 100%;
+}
+
+.write-feedback-button {
+  margin: -12px 4px 0 0 !important;
+  height: 35px;
+  padding: 10px;
+  float: right;
+  background-color: #2a6eb7 !important;
+  color: #fff !important;
+  text-shadow: none;
+  background-image: none;
+}
+
+.essay-content-text {
+  white-space: pre-line;
+  margin: 10px 0px !important;
+  color: #000000;
+}
+
+.feedback-content-section {
+  display: inline-block;
+  padding: 5px;
+  width: 50%;
+}
+
+.feedback-content-box {
+  display: block;
+}
+
+.feedback-section-description {
+  display: block;
+  margin: 5px;
+  color: #2568af;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.feedback-label-text {
+  display: inline-block;
+  margin: 3px 5px;
+  color: #000;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.feedback-value-text {
+  display: inline-block;
+  margin: 3px 5px;
+  white-space: 'pre-line';
+  font-size: 14px;
+  color: #000;
+}
+
+.empty-list-image {
+  display: block;
+  margin: 10px;
+  width: 250px !important;
+  height: 250px !important;
+}
+
+.empty-list-text {
+  display: block;
+  margin: 10px;
+  font-size: 20px;
+  color: #6a89b3;
+  font-family:'Merriweather', sans-serif;
+}
+

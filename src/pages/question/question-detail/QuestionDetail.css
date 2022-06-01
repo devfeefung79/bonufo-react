@@ -1,0 +1,111 @@
+.question-heading-text {
+  color: #184270;
+  font-family: "Merriweather", sans-serif;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.question-detail-box {
+  margin-top: 15px;
+}
+
+.write-essay-button-box {
+  width: 100%;
+}
+
+.write-essay-button {
+  margin: -12px 4px 0 0 !important;
+  height: 35px;
+  padding: 10px;
+  float: right;
+  background-color: #2a6eb7 !important;
+  color: #fff !important;
+  text-shadow: none;
+  background-image: none;
+}
+
+.topic-label {
+  background-color: #f2711c !important;
+  border-color: #f2711c !important;
+  color: #fff !important;
+  margin: 2px 5px 2px 0px !important;
+  font-size: 12px !important;
+}
+
+.question-type-label {
+  background-color: #fbbd08 !important;
+  border-color: #fbbd08 !important;
+  color: #fff !important;
+  margin: 2px 5px 2px 0px !important;
+  font-size: 12px !important;
+}
+
+.exam-label {
+  background-color: #00b5ad !important;
+  border-color: #00b5ad !important;
+  color: #fff !important;
+  float: right;
+  margin: 2px 0px 2px 5px !important;
+  font-size: 12px !important;
+}
+
+.question-content-text {
+  white-space: pre-line;
+  margin: 10px 0px !important;
+  color: #000000;
+}
+
+.prev-submission-text {
+  font-size: 18px;
+  font-weight: bold;
+  color: #184270;
+  font-family: "Merriweather", sans-serif;
+}
+
+.result-count {
+  float: right;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.submitter-name-text {
+  color: #2568af;
+  float: right;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.average-score-text {
+  color: #2568af;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.essay-content-text {
+  white-space: 'pre-line';
+  margin-top: 5px;
+  color: #000;
+}
+
+.empty-list-box {
+  text-align: center; 
+  min-height: 150px; 
+  padding: 10% 0%;
+  border: 1px solid rgb(106 137 179 / 30%) !important;
+  box-shadow: 0 1px 2px 0 rgb(106 137 179 / 30%) !important;
+}
+
+.empty-list-image {
+  display: block;
+  margin: 10px;
+  width: 250px !important;
+  height: 250px !important;
+}
+
+.empty-list-text {
+  display: block;
+  margin: 10px;
+  font-size: 20px;
+  color: #6a89b3;
+  font-family:'Merriweather', sans-serif;
+}

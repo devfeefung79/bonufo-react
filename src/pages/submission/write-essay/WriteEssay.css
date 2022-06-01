@@ -1,0 +1,70 @@
+.response-heading-text {
+  color: #184270;
+  font-family: "Merriweather", sans-serif;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.response-question-content {
+  margin-top: 10px;
+}
+
+.response-form label {
+  font-size: 14px !important;
+  margin: 10px;
+}
+
+.response-form-save-draft-btn {
+  float: right;
+  box-shadow: 0 0 0 1px #6A89B3 inset !important;
+  background-color: #fff !important;
+  color: #6A89B3 !important;
+}
+
+.response-form-submit-btn {
+  float: right;
+  background-color: #2a6eb7 !important;
+  color: #fff !important;
+  text-shadow: none;
+  background-image: none;
+}
+
+.marking-scheme-segment {
+  padding: 8px 12px !important;
+  background: #2568af !important;
+}
+
+.marking-scheme-info-icon {
+  color: #fff;
+}
+
+.marking-scheme-text {
+  display: inline-block;
+  padding: 0px 10px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.marking-scheme-table {
+  border: 0px !important;
+  border-radius: 0px ;
+}
+
+.marking-scheme-table thead tr th {
+  background: #2568af !important;
+  color:#fff !important;
+  border-radius: 0px !important;
+  border-bottom: 0px !important;
+}
+
+.marking-scheme-table tbody tr {
+  border: 0px !important;
+}
+
+.marking-scheme-table tbody tr td {
+  border-top: 0px !important;
+}
+
+.marking-scheme-table-emphasize {
+  color:#000 !important;
+}

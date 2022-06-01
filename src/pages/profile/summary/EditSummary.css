@@ -1,0 +1,26 @@
+.edit-summary-modal {
+  border: 1px solid #6A89B3;
+  padding: 25px 20px 20px;
+}
+
+.edit-summary-heading-text {
+  color: #184270;
+  font-family: "Merriweather", sans-serif;
+  font-weight: bold;
+  font-size: 24px;
+  margin: 10px 0px;
+}
+
+.edit-summary-modal.content {
+  padding: 0px !important;
+  border: 0px !important;
+  margin: 20px 0px 15px;
+}
+
+.edit-summary-submit-button {
+  float: right;
+  background-color: #2a6eb7 !important;
+  color: #fff !important;
+  text-shadow: none;
+  background-image: none;
+}

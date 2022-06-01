@@ -1,0 +1,41 @@
+.profile-feedback-history-table {
+  width: 100%;
+}
+
+.profile-feedback-history-table tr td:nth-child(1) {
+  width: 30px;
+  color: #184270;
+  font-weight: 600;
+  white-space: pre-line;
+}
+
+.profile-feedback-history-table tr td a {
+  color: #000;
+}
+
+.profile-feedback-history-table tr td p {
+  white-space: pre-line;
+}
+
+.profile-feedback-history-table tr td {
+  vertical-align: top;
+}
+
+.profile-feedback-section-table {
+  width: 100%;
+}
+
+.profile-feedback-section-table tr td:nth-child(1) {
+  width: 30%;
+  color: #184270;
+  font-weight: 600;
+  white-space: pre-line;
+}
+
+.profile-feedback-section-table tr td:nth-child(2) {
+  width: 50%;
+}
+
+.profile-feedback-section-table tr td:nth-child(3) {
+  width: 20%;
+}

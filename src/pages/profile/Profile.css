@@ -1,0 +1,119 @@
+.user-info {
+  width: 100%;
+  display: block;
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.logout-btn-box {
+  width: 100%;
+}
+
+.logout-btn {
+  float: right;
+  background-color: #2a6eb7 !important;
+  color: #fff !important;
+  margin-top: 7px !important;
+  text-shadow: none;
+  background-image: none;
+}
+
+.profile-user-image {
+  width: 150px;
+  height: 150px;
+}
+
+.profile-user-icon {
+  display: inline-block;
+  width: 150px;
+  height: 150px;
+  padding: 65px 0px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 45px;
+  font-family: 'Merriweather';
+  background-color: #a2aee9;
+  opacity: 0.9;
+  color: #fff;
+  border-radius: 50%;
+}
+
+.profile-username-text {
+  font-size: 20px;
+  color: #6A89B3;
+  font-family:'Merriweather', sans-serif;
+  font-weight: bold;
+  display: block;
+  margin: 10px 0px;
+}
+
+.profile-heading-text {
+  color: #184270;
+  font-family: "Merriweather", sans-serif;
+  font-weight: bold;
+  font-size: 24px;
+  margin: 10px 0px;
+}
+
+.profile-subheading-text {
+  color: #184270;
+  font-family: "Merriweather", sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  display: block;
+  margin: 10px 0px;
+}
+
+.profile-table tr td:nth-child(1) {
+  width: 30px;
+  color: #184270;
+  font-weight: 600;
+  white-space: pre-line;
+}
+
+.profile-table tr td a {
+  color: #000;
+}
+
+.profile-table tr td p {
+  white-space: pre-line;
+}
+
+.profile-table tr td {
+  vertical-align: top;
+}
+
+.profile-table tr td button {
+  cursor: pointer;
+  border-radius: 0px;
+  border-color: transparent;
+  background-color: transparent;
+  color: #6A89B3;
+  margin-top: 7px;
+}
+
+.profile-divider {
+  margin: 5px 0px 2px !important;
+}
+
+.profile-accordion {
+  margin: 8px 0px;
+  box-shadow: 0 1px 2px 0 rgb(37 104 175 / 30%), 0 0 0 1px rgb(37 104 175 / 30%) !important;
+  border-radius: 5px !important;
+}
+
+.profile-accordion .title {
+  background-color: #2568af !important;
+  color: #fff !important;
+  border-radius: 5px 5px 0px 0px;
+}
+
+.profile-table-content {
+  margin: 10px 0px !important;
+}
+
+.profile-empty-list-text {
+  display: block;
+  margin: 10px 0px;
+  font-size: 16px;
+}

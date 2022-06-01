@@ -1,0 +1,40 @@
+.feedback-heading-text {
+  color: #184270;
+  font-family: "Merriweather", sans-serif;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.feedback-subheading-text {
+  color: #6A89B3;
+  font-family: "Merriweather", sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  display: block;
+  margin: 10px 0px;
+}
+
+.feedback-marking-text {
+  display: block;
+  padding: 5px 10px;
+  font-weight: bold;
+  color: #000;
+}
+
+.marking-form .ui.input input {
+  width: 40px !important;
+  padding: 5px 10px !important;
+  height: 35px !important;
+}
+
+.marking-table tbody tr td:nth-child(1) {
+  font-weight: bold;
+}
+
+.feedback-form-submit-btn {
+  float: right;
+  background-color: #2a6eb7 !important;
+  color: #fff !important;
+  text-shadow: none;
+  background-image: none;
+}

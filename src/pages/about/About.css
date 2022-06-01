@@ -1,0 +1,20 @@
+.about-heading-text {
+  color: #184270;
+  font-family: "Merriweather", sans-serif;
+  font-weight: bold;
+  font-size: 24px;
+  margin: 10px 0px;
+}
+
+.about-desp {
+  margin: 10px 0px 18px;
+}
+
+.about-subheading-text {
+  color: #6A89B3;
+  font-family: "Merriweather", sans-serif;
+  font-weight: bold;
+  font-size: 16px;
+  display: block;
+  margin: 10px 0px;
+}

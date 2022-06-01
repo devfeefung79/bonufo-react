@@ -1,0 +1,111 @@
+.section-heading-text {
+  color: #184270;
+  font-family: "Merriweather", sans-serif;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.search-form {
+  margin-top: 5px;
+}
+
+.search-form .topic-select .ui.label {
+  color: #fff;
+  background-color: #f2711c !important;
+  box-shadow: 0 0 0 1px rgba(242, 113, 28, 0.15) inset !important;
+  font-size: 12px !important;
+}
+
+.search-form .question-type-select .ui.label {
+  color: #fff;
+  background-color: #fbbd08 !important;
+  box-shadow: 0 0 0 1px rgba(251, 189, 8, 0.15) inset !important;
+  font-size: 12px !important;
+}
+
+.search-form .exam-select .ui.label {
+  color: #fff;
+  background-color: #00b5ad !important;
+  box-shadow: 0 0 0 1px rgba(0, 181, 173, 0.15) inset !important;
+  font-size: 12px !important;
+}
+
+.search-form .ui.label:hover {
+  color: #fff !important;
+}
+
+.submit-button {
+  float: right;
+  background-color: #2a6eb7 !important;
+  color: #fff !important;
+  text-shadow: none;
+  background-image: none;
+}
+
+.clear-button {
+  float: right;
+  box-shadow: 0 0 0 1px #6A89B3 inset !important;
+  background-color: #fff !important;
+  color: #6A89B3 !important;
+}
+
+.ui.loading.segment {
+  min-height: 300px;
+}
+
+.question-text {
+  font-size: 18px;
+  font-weight: bold;
+  color: #184270;
+  font-family: "Merriweather", sans-serif;
+}
+
+.result-count {
+  float: right;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.topic-label {
+  background-color: #f2711c !important;
+  border-color: #f2711c !important;
+  color: #fff !important;
+  margin: 2px 5px 2px 0px !important;
+  font-size: 12px !important;
+}
+
+.question-type-label {
+  background-color: #fbbd08 !important;
+  border-color: #fbbd08 !important;
+  color: #fff !important;
+  margin: 2px 5px 2px 0px !important;
+  font-size: 12px !important;
+}
+
+.exam-label {
+  background-color: #00b5ad !important;
+  border-color: #00b5ad !important;
+  color: #fff !important;
+  float: right;
+  margin: 2px 0px 2px 5px !important;
+  font-size: 12px !important;
+}
+
+.question-content-text {
+  white-space: pre-line;
+  color: #000000;
+}
+
+p:first-child {
+  margin-top: 10px !important;
+}
+
+.search-save-icon {
+  cursor: pointer;
+  border-radius: 0px;
+  border-color: transparent;
+  background-color: transparent;
+  color: #6A89B3;
+  float: right;
+  margin-top: 2px;
+}
