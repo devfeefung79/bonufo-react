@@ -7,7 +7,7 @@ import {
 } from '../../utils/FormUtils';
 import './Landing.css';
 
-const BASE_URL = `https://bonufo-express.vercel.app/`;
+const BASE_URL = `https://bonufo-express.vercel.app`;
 
 function Landing(props) {
 

@@ -6,7 +6,7 @@ import { Segment, Divider, Button, Label, Placeholder, Image } from 'semantic-ui
 import EmptyListIcon from '../../../assets/bear-5846065_960_720.jpg';
 import './QuestionDetail.css';
 
-const BASE_URL = `https://bonufo-express.vercel.app/`;
+const BASE_URL = `https://bonufo-express.vercel.app`;
 
 function QuestionDetail(props) {
 

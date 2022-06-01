@@ -16,7 +16,7 @@ import './App.css';
 import { UserControlModel, defaultUserControl } from './utils/UserUtils';
 import { Image } from 'semantic-ui-react'
 
-const BASE_URL = `https://bonufo-express.vercel.app/`;
+const BASE_URL = `https://bonufo-express.vercel.app`;
 
 function App() {
 

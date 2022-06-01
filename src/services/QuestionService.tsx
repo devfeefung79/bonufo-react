@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import { SearchFormRequestBody } from '../utils/FormUtils';
 import { QuestionModel, QuestionTagModel, SavedQuestionModel } from '../utils/QuestionUtils';
 
-const BASE_URL = `https://bonufo-express.vercel.app/`;
+const BASE_URL = `https://bonufo-express.vercel.app`;
 
 /* Question */
 

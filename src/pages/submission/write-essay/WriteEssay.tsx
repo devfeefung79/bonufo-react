@@ -6,7 +6,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { Button, Table, Form, Accordion, Icon, Segment } from 'semantic-ui-react';
 import './WriteEssay.css';
 
-const BASE_URL = `https://bonufo-express.vercel.app/`;
+const BASE_URL = `https://bonufo-express.vercel.app`;
 
 interface WriteEssayForm {
   currentMarkingScheme: MarkingSchemeModel;

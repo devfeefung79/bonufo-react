@@ -7,7 +7,7 @@ import SavedQuestion from './saved-question/SavedQuestion';
 import SubmissionHistory from './submission-history/SubmissionHistory';
 import FeedbackHistory from './feedback-history/FeedbackHistory';
 
-const BASE_URL = `https://bonufo-express.vercel.app/`;
+const BASE_URL = `https://bonufo-express.vercel.app`;
 
 function Profile(props) {
 

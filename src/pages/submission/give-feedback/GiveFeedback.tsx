@@ -11,7 +11,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { Button, Table, Form, Input, Icon, Segment, Grid, GridColumn, TextArea } from 'semantic-ui-react';
 import './GiveFeedback.css';
 
-const BASE_URL = `https://bonufo-express.vercel.app/`;
+const BASE_URL = `https://bonufo-express.vercel.app`;
 
 function GiveFeedback(props) {
 
