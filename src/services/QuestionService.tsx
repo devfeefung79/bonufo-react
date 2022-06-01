@@ -8,7 +8,10 @@ const BASE_URL = `https://bonufo-express.vercel.app`;
 
 export let getQuestionList = async (accessToken): Promise<Array<QuestionModel> | undefined> => {
   const data = await axios.get(`${BASE_URL}/question/all`, {
-    headers: { "Authorization": `Bearer ${accessToken}` }
+    headers: {
+      "access-control-allow-origin": "*",
+      "Authorization": `Bearer ${accessToken}`
+    }
   })
     .then(res => {
       return res.data;;
@@ -21,7 +24,7 @@ export let getQuestionList = async (accessToken): Promise<Array<QuestionModel> |
 
 export let getQuestionListByFilter = async (requestBody: SearchFormRequestBody, accessToken): Promise<Array<QuestionModel> | undefined> => {
   const data = await axios.post(`${BASE_URL}/question/search`, requestBody, {
-    headers: { "Authorization": `Bearer ${accessToken}` }
+    headers: { "access-control-allow-origin": "*", "Authorization": `Bearer ${accessToken}` }
   })
     .then(res => {
       return res.data;
@@ -36,7 +39,7 @@ export let getQuestionListByFilter = async (requestBody: SearchFormRequestBody, 
 
 export let getTopicList = async (accessToken): Promise<Array<QuestionTagModel> | undefined> => {
   const data = await axios.get(`${BASE_URL}/question/topics`, {
-    headers: { "Authorization": `Bearer ${accessToken}` }
+    headers: { "access-control-allow-origin": "*", "Authorization": `Bearer ${accessToken}` }
   })
     .then(res => {
       return res.data;
@@ -49,7 +52,7 @@ export let getTopicList = async (accessToken): Promise<Array<QuestionTagModel> |
 
 export let getQuestionTypeList = async (accessToken): Promise<Array<QuestionTagModel> | undefined> => {
   const data = await axios.get(`${BASE_URL}/question/question-types`, {
-    headers: { "Authorization": `Bearer ${accessToken}` }
+    headers: { "access-control-allow-origin": "*", "Authorization": `Bearer ${accessToken}` }
   })
     .then(res => {
       return res.data;
@@ -62,7 +65,7 @@ export let getQuestionTypeList = async (accessToken): Promise<Array<QuestionTagM
 
 export let getExamList = async (accessToken): Promise<Array<QuestionTagModel> | undefined> => {
   const data = await axios.get(`${BASE_URL}/question/exams`, {
-    headers: { "Authorization": `Bearer ${accessToken}` }
+    headers: { "access-control-allow-origin": "*", "Authorization": `Bearer ${accessToken}` }
   })
     .then(res => {
       return res.data;
@@ -77,7 +80,7 @@ export let getExamList = async (accessToken): Promise<Array<QuestionTagModel> | 
 
 export let getSavedQuestionListByUserId = async (userId: string, accessToken): Promise<Array<SavedQuestionModel> | undefined> => {
   const data = await axios.get(`${BASE_URL}/question/saved-questions/${userId}`, {
-    headers: { "Authorization": `Bearer ${accessToken}` }
+    headers: { "access-control-allow-origin": "*", "Authorization": `Bearer ${accessToken}` }
   })
     .then(res => {
       return res.data;
@@ -90,7 +93,7 @@ export let getSavedQuestionListByUserId = async (userId: string, accessToken): P
 
 export let addSavedQuestion = async (savedQuestionData: { userId: string, questionId: string, question: string }, accessToken): Promise<SavedQuestionModel | undefined> => {
   const data = await axios.post(`${BASE_URL}/question/save`, savedQuestionData, {
-    headers: { "Authorization": `Bearer ${accessToken}` }
+    headers: { "access-control-allow-origin": "*", "Authorization": `Bearer ${accessToken}` }
   })
     .then(res => {
       return res.data;
@@ -103,7 +106,7 @@ export let addSavedQuestion = async (savedQuestionData: { userId: string, questi
 
 export let deleteSavedQuestion = async (savedQuestionData: { userId: string, questionId: string }, accessToken): Promise<AxiosResponse | undefined> => {
   const data = await axios.delete(`/question/unsave/${savedQuestionData.userId}/${savedQuestionData.questionId}`, {
-    headers: { "Authorization": `Bearer ${accessToken}` }
+    headers: { "access-control-allow-origin": "*", "Authorization": `Bearer ${accessToken}` }
   })
     .then(res => {
       return res.data;

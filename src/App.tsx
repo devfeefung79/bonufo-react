@@ -27,6 +27,7 @@ function App() {
     getAccessToken();
   }, []);
 
+  /*
   useEffect(() => {
     const interval = setInterval(() => {
       setCounter((prevCounter) => prevCounter + 1);
@@ -37,6 +38,7 @@ function App() {
       return () => clearInterval(interval);
     }
   }, [counter]);
+  */
 
   let getAccessToken = () => {
     axios.get(`${BASE_URL}/user/refresh`, { withCredentials: true })

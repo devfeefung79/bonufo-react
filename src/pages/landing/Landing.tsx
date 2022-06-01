@@ -74,7 +74,11 @@ function Landing(props) {
         password: registerFormData.password,
         role: roleStr,
       }
-      axios.post(`${BASE_URL}/user/signup`, requestBody)
+      axios.post(`${BASE_URL}/user/signup`, requestBody, {
+        headers: {
+          "access-control-allow-origin": "*"
+        }
+      })
         .then(res => {
           if (res.data) {
             requestLogin(requestBody);
@@ -167,7 +171,11 @@ function Landing(props) {
   }
 
   let requestLogin = (requestBody: LoginFormRequestBody) => {
-    axios.post(`${BASE_URL}/user/login`, requestBody)
+    axios.post(`${BASE_URL}/user/login`, requestBody, {
+      headers: {
+        "access-control-allow-origin": "*"
+      }
+    })
       .then(res => {
         props.handleSuccessLogin(res.data.accessToken);
       })

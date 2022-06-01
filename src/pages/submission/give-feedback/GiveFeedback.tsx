@@ -28,7 +28,10 @@ function GiveFeedback(props) {
 
   let getCurrEssay = (id: string) => {
     axios.get(`${BASE_URL}/essay/${id}`, {
-      headers: { "Authorization": `Bearer ${props.user.accessToken}` }
+      headers: {
+        "access-control-allow-origin": "*",
+        "Authorization": `Bearer ${props.user.accessToken}`
+      }
     })
       .then(res => {
         setCurrentEssay(res.data);
