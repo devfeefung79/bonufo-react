@@ -1,38 +1,92 @@
-.App {
+.app-main {
+  padding: 70px 40px;
+}
+
+.app-name-text {
+  font-size: 24px;
+  color: #808080;
+  margin: 8px;
+}
+
+.app-header {
+  position: fixed;
+  width: 100%;
+  top: 0px;
+  background: #ffffff;
+  z-index: 999;
+}
+
+.app-logo {
+  display: inline !important;
+  margin: 5px;
+}
+
+.app-header-user-icon {
+  width: 40px;
+  height: 40px;
+  margin: 3px 8px 3px 0px;
+  float: right;
+  padding: 10px 1px;
   text-align: center;
+  font-weight: bold;
+  font-size: 16px;
+  font-family: 'Merriweather';
+  background-color: #a2aee9;
+  opacity: 0.9;
+  color: #fff;
+  border-radius: 50%;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.app-header-user-image {
+  width: 40px;
+  height: 40px;
+  margin: 3px 8px 3px 0px;
+  float: right;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.username-text {
+  float: right;
+  vertical-align: middle;
+  font-size: 20px;
+  margin: 15px 8px 0px;
+  color: #6A89B3;
+  font-family:'Merriweather', sans-serif;
+  font-weight: bold;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.app-footer {
+  position: fixed;
+  width: 100%;
+  bottom: 0px;
+  background: #ffffff;
+  padding: 5px;
+  color: #808080;
+  text-align: right;
+  z-index: 999;
 }
 
-.App-link {
-  color: #61dafb;
+.about-text {
+  color: #6A89B3 !important;
+  font-family:'Merriweather', sans-serif;
+  font-weight: bold;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.about-text span {
+  margin: 0px 10px;
+}
+
+.copyright-text {
+  color: #6e6e6e;
+  float: right;
+  font-family:'Merriweather', sans-serif;
+}
+
+.ui.segment {
+  border: 1px solid rgb(106 137 179 / 30%) !important;
+  box-shadow: 0 1px 2px 0 rgb(106 137 179 / 30%) !important;
+}
+
+.ui.divider:not(.vertical):not(.horizontal) {
+  border-top: 1px solid rgb(106 137 179 / 30%) !important;
+  border-bottom: none !important;
 }
