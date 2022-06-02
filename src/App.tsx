@@ -41,7 +41,11 @@ function App() {
   */
 
   let getAccessToken = () => {
-    axios.get(`${BASE_URL}/user/refresh`, { withCredentials: true })
+    axios.get(`${BASE_URL}/user/refresh`, {
+      headers: {
+        "access-control-allow-origin": "*"
+      }
+    })
       .then(res => {
         let decodedUser: UserControlModel = jwt_decode(res.data.accessToken);
         decodedUser.accessToken = res.data.accessToken;
