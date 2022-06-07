@@ -41,7 +41,9 @@ function App() {
   */
 
   let getAccessToken = () => {
-    axios.get(`${BASE_URL}/user/refresh`)
+    axios.get(`${BASE_URL}/user/refresh`, {
+      withCredentials: true,
+    })
       .then(res => {
         console.log(res);
         let decodedUser: UserControlModel = jwt_decode(res.data.accessToken);
@@ -61,7 +63,9 @@ function App() {
   }
 
   let handleLogout = () => {
-    axios.get(`${BASE_URL}/user/logout`)
+    axios.get(`${BASE_URL}/user/logout`, {
+      withCredentials: true,
+    })
       .then(() => {
         setUser({ ...user, ...defaultUserControl, isValid: false });
       })

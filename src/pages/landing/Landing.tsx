@@ -173,7 +173,6 @@ function Landing(props) {
   let requestLogin = (requestBody: LoginFormRequestBody) => {
     axios.post(`${BASE_URL}/user/login`, requestBody, {
       withCredentials: true,
-      headers: { "access-control-allow-origin": "*" }
     })
       .then(res => {
         props.handleSuccessLogin(res.data.accessToken);
