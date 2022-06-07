@@ -3,17 +3,17 @@ import axios from 'axios';
 import { QuestionModel } from '../../../utils/QuestionUtils';
 import { Link, useParams } from "react-router-dom";
 import { Segment, Divider, Button, Label, Placeholder, Image } from 'semantic-ui-react';
-import EmptyListIcon from '../../../assets/bear-5846065_960_720.jpg';
+import EmptyItemBox from '../../component/empty-item-box/EmptyItemBox';
 import './QuestionDetail.css';
 
 const BASE_URL = `https://bonufo-express.vercel.app`;
 
 function QuestionDetail(props) {
 
-  let { questionId } = useParams<{ questionId: string }>();
-  let [currentQuestion, setCurrentQuestion] = useState<QuestionModel>();
-  let [submissionList, setSubmissionList] = useState([]);
-  let [pageControl, setPageControl] = useState({
+  const { questionId } = useParams<{ questionId: string }>();
+  const [currentQuestion, setCurrentQuestion] = useState<QuestionModel>();
+  const [submissionList, setSubmissionList] = useState([]);
+  const [pageControl, setPageControl] = useState({
     isLoadingQuestion: false,
     isLoadingSubmission: false,
   })
@@ -131,17 +131,8 @@ function QuestionDetail(props) {
               </div>
             )}
           </Segment>
-          : <Segment
-            className='empty-list-box'
-            loading={pageControl.isLoadingSubmission}>
-            <Image
-              src={EmptyListIcon}
-              className="empty-list-image"
-              avatar />
-            <span className='empty-list-text'>
-              No one has submitted his/her work for this question before.
-            </span>
-          </Segment>
+          :
+          <EmptyItemBox description={`No one has submitted his/her work for this question before.`} />
         }
       </>
     </div>

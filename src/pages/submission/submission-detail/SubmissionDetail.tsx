@@ -3,17 +3,17 @@ import { EssayModel, defaultEssayModel } from '../../../utils/EssayUtils';
 import axios from 'axios';
 import { Link, useParams } from "react-router-dom";
 import { Placeholder, Segment, Button, Image, Divider, Grid } from 'semantic-ui-react';
-import EmptyListIcon from '../../../assets/bear-5846065_960_720.jpg';
+import EmptyItemBox from '../../component/empty-item-box/EmptyItemBox';
 import './SubmissionDetail.css';
 
 const BASE_URL = `https://bonufo-express.vercel.app`;
 
 function SubmissionDetail(props) {
 
-  let { essayId } = useParams<{ essayId: string }>();
-  let [currentEssay, setCurrentEssay] = useState<EssayModel>(defaultEssayModel);
-  let [feedbackList, setFeedbackList] = useState([]);
-  let [pageControl, setPageControl] = useState({
+  const { essayId } = useParams<{ essayId: string }>();
+  const [currentEssay, setCurrentEssay] = useState<EssayModel>(defaultEssayModel);
+  const [feedbackList, setFeedbackList] = useState([]);
+  const [pageControl, setPageControl] = useState({
     isLoadingEssay: false,
     isLoadingFeedback: false,
   });
@@ -165,17 +165,8 @@ function SubmissionDetail(props) {
               </div>
             )}
           </Segment> :
-          <Segment
-            className='empty-list-box'
-            loading={pageControl.isLoadingFeedback}>
-            <Image
-              src={EmptyListIcon}
-              className="empty-list-image"
-              avatar />
-            <span className='empty-list-text'>
-              {`No one has rated ${currentEssay.submitterName}'s essay for this question before.`}
-            </span>
-          </Segment>}
+          <EmptyItemBox description={`No one has rated ${currentEssay.submitterName}'s essay for this question before.`} />
+        }
       </>
     </div>
   );

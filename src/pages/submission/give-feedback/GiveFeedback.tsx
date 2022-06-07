@@ -29,14 +29,17 @@ function GiveFeedback(props) {
   let getCurrEssay = (id: string) => {
     axios.get(`${BASE_URL}/essay/${id}`, {
       headers: {
-        "access-control-allow-origin": "*",
         "Authorization": `Bearer ${props.user.accessToken}`
       }
     })
       .then(res => {
         setCurrentEssay(res.data);
         if (res.data.markingSchemeId && res.data.markingSchemeId !== '') {
-          axios.get(`${BASE_URL}/essay/marking-scheme/${res.data.markingSchemeId}`)
+          axios.get(`${BASE_URL}/essay/marking-scheme/${res.data.markingSchemeId}`, {
+            headers: {
+              "Authorization": `Bearer ${props.user.accessToken}`
+            }
+          })
             .then(res => {
               setCurrentMarkingScheme(res.data);
               setMarkingForm({ ...markingForm, sections: res.data.sections });

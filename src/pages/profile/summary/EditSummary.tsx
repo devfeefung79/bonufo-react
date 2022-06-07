@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import axios from 'axios';
 import { Button, TextArea, Modal, Form } from 'semantic-ui-react'
+import axios from 'axios';
 import './EditSummary.css';
 
 interface Props {

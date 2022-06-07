@@ -17,13 +17,13 @@ import { Segment, Divider, Button, Form, Label } from 'semantic-ui-react';
 
 function Search(props) {
 
-  let [topicOptions, setTopicOptions] = useState([]);
-  let [questionTypeOptions, setQuestionTypeOptions] = useState([]);
-  let [relatedExamOptions, setRelatedExamOptions] = useState([]);
-  let [questions, setQuestions] = useState<Array<QuestionModel>>([]);
-  let [savedQuestions, setSavedQuestions] = useState<Array<SavedQuestionModel>>([]);
-  let [searchForm, setSearchForm] = useState<SearchForm>(defaultSearchForm);
-  let [pageControl, setPageControl] = useState({
+  const [topicOptions, setTopicOptions] = useState([]);
+  const [questionTypeOptions, setQuestionTypeOptions] = useState([]);
+  const [relatedExamOptions, setRelatedExamOptions] = useState([]);
+  const [questions, setQuestions] = useState<Array<QuestionModel>>([]);
+  const [savedQuestions, setSavedQuestions] = useState<Array<SavedQuestionModel>>([]);
+  const [searchForm, setSearchForm] = useState<SearchForm>(defaultSearchForm);
+  const [pageControl, setPageControl] = useState({
     isQuestionsLoading: false,
   });
 

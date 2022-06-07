@@ -172,9 +172,8 @@ function Landing(props) {
 
   let requestLogin = (requestBody: LoginFormRequestBody) => {
     axios.post(`${BASE_URL}/user/login`, requestBody, {
-      headers: {
-        "access-control-allow-origin": "*"
-      }
+      withCredentials: true,
+      headers: { "access-control-allow-origin": "*" }
     })
       .then(res => {
         props.handleSuccessLogin(res.data.accessToken);
@@ -233,8 +232,8 @@ function Landing(props) {
                   <div className="header">Error occurred</div>
                   <p>Please check the following:
                     <ul>
-                      {registerFormControl.messageList.map((msg) =>
-                        <li>{msg}</li>
+                      {registerFormControl.messageList.map((mItem, mIndex) =>
+                        <li key={mIndex}>{mItem}</li>
                       )}
                     </ul>
                   </p>
