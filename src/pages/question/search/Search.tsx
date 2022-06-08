@@ -17,9 +17,9 @@ import { Segment, Divider, Button, Form, Label } from 'semantic-ui-react';
 
 function Search(props) {
 
-  const [topicOptions, setTopicOptions] = useState([]);
-  const [questionTypeOptions, setQuestionTypeOptions] = useState([]);
-  const [relatedExamOptions, setRelatedExamOptions] = useState([]);
+  const [topicOptions, setTopicOptions] = useState<Array<DropdownOption>>([]);
+  const [questionTypeOptions, setQuestionTypeOptions] = useState<Array<DropdownOption>>([]);
+  const [relatedExamOptions, setRelatedExamOptions] = useState<Array<DropdownOption>>([]);
   const [questions, setQuestions] = useState<Array<QuestionModel>>([]);
   const [savedQuestions, setSavedQuestions] = useState<Array<SavedQuestionModel>>([]);
   const [searchForm, setSearchForm] = useState<SearchForm>(defaultSearchForm);
@@ -28,21 +28,21 @@ function Search(props) {
   });
 
   useEffect(() => {
-    getTopicOpt();
-    getQuestionTypeOpt();
-    getExamOpt();
-    getAllQuestion();
-    getSavedQuestion();
-  }, []);
+    getTopicOpt(props.user.accessToken);
+    getQuestionTypeOpt(props.user.accessToken);
+    getExamOpt(props.user.accessToken);
+    getAllQuestion(props.user.accessToken);
+    getSavedQuestion(props.user._id, props.user.accessToken);
+  }, [props.user._id, props.user.accessToken]);
 
-  let getAllQuestion = async () => {
+  const getAllQuestion = async (accessToken: string) => {
     setPageControl({ ...pageControl, isQuestionsLoading: true });
-    let questionList = await getQuestionList(props.user.accessToken);
+    let questionList = await getQuestionList(accessToken);
     if (questionList) setQuestions(questionList);
     setPageControl({ ...pageControl, isQuestionsLoading: false });
   };
 
-  let getOptList = (data: Array<QuestionTagModel>) => {
+  const getOptList = (data: Array<QuestionTagModel>) => {
     let optList: Array<DropdownOption> = [];
     for (let i = 0; i < data.length; i++) {
       let opt: DropdownOption = {
@@ -55,55 +55,55 @@ function Search(props) {
     return optList;
   };
 
-  let getTopicOpt = async () => {
-    let topics = await getTopicList(props.user.accessToken);
+  const getTopicOpt = async (accessToken: string) => {
+    const topics = await getTopicList(accessToken);
     let optList;
     if (topics) optList = getOptList(topics);
     setTopicOptions(optList);
   };
 
-  let getQuestionTypeOpt = async () => {
-    let questionTypes = await getQuestionTypeList(props.user.accessToken);
+  const getQuestionTypeOpt = async (accessToken: string) => {
+    const questionTypes = await getQuestionTypeList(accessToken);
     let optList;
     if (questionTypes) optList = getOptList(questionTypes);
     setQuestionTypeOptions(optList);
   };
 
-  let getExamOpt = async () => {
-    let exams = await getExamList(props.user.accessToken);
+  const getExamOpt = async (accessToken: string) => {
+    const exams = await getExamList(accessToken);
     let optList;
     if (exams) optList = getOptList(exams);
     setRelatedExamOptions(optList);
   };
 
-  let getSavedQuestion = async () => {
-    let savedQuestionList = await getSavedQuestionListByUserId(props.user._id, props.user.accessToken);
+  const getSavedQuestion = async (userId: string, accessToken: string) => {
+    const savedQuestionList = await getSavedQuestionListByUserId(userId, accessToken);
     if (savedQuestionList) setSavedQuestions(savedQuestionList);
   }
 
-  let onChangeKeyword = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeKeyword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchForm({ ...searchForm, keyword: e.target.value });
   };
 
-  let onChangeTopic = (e, { value }) => {
+  const onChangeTopic = (e, { value }) => {
     setSearchForm({ ...searchForm, topic: value });
   };
 
-  let onChangeQuestionType = (e, { value }) => {
+  const onChangeQuestionType = (e, { value }) => {
     setSearchForm({ ...searchForm, questionType: value });
   };
 
-  let onChangeExam = (e, { value }) => {
+  const onChangeExam = (e, { value }) => {
     setSearchForm({ ...searchForm, exam: value });
   };
 
-  let onClickClear = () => {
+  const onClickClear = () => {
     setSearchForm({ ...searchForm, ...defaultSearchForm });
   };
 
-  let onSubmit = async () => {
+  const onSubmit = async (accessToken: string) => {
     if (searchForm === defaultSearchForm) {
-      getAllQuestion();
+      getAllQuestion(accessToken);
     }
     else {
       let requestBody: SearchFormRequestBody = {};
@@ -120,20 +120,20 @@ function Search(props) {
         requestBody.exam = searchForm.exam;
       }
       setPageControl({ ...pageControl, isQuestionsLoading: true });
-      let questionList = await getQuestionListByFilter(requestBody, props.user.accessToken);
+      const questionList = await getQuestionListByFilter(requestBody, accessToken);
       if (questionList) setQuestions(questionList);
       setPageControl({ ...pageControl, isQuestionsLoading: false });
     }
   }
 
-  let saveQuestion = async (savedQuestionData: { userId: string, questionId: string, question: string }) => {
-    await addSavedQuestion(savedQuestionData, props.user.accessToken);
-    getSavedQuestion();
+  const saveQuestion = async (savedQuestionData: { userId: string, questionId: string, question: string }, accessToken: string) => {
+    await addSavedQuestion(savedQuestionData, accessToken);
+    getSavedQuestion(savedQuestionData.userId, accessToken);
   }
 
-  let unsaveQuestion = async (savedQuestionData: { userId: string, questionId: string }) => {
-    await deleteSavedQuestion(savedQuestionData, props.user.accessToken);
-    getSavedQuestion();
+  const unsaveQuestion = async (userId: string, questionId: string, accessToken: string) => {
+    await deleteSavedQuestion(userId, questionId, accessToken);
+    getSavedQuestion(userId, accessToken);
   }
 
   return (
@@ -174,7 +174,7 @@ function Search(props) {
           <Button
             className='submit-button'
             type='submit'
-            onClick={onSubmit}>
+            onClick={() => onSubmit(props.user.accessToken)}>
             Submit
           </Button>
           <Button
@@ -207,13 +207,13 @@ function Search(props) {
             {savedQuestions.find((sItem) => sItem.questionId === qItem._id) ?
               <button
                 className='search-save-icon'
-                onClick={() => unsaveQuestion({ userId: props.user._id, questionId: qItem._id })}
+                onClick={() => unsaveQuestion(props.user._id, qItem._id, props.user.accessToken)}
               >
                 <i className="star icon"></i>
               </button> :
               <button
                 className='search-save-icon'
-                onClick={() => saveQuestion({ userId: props.user._id, questionId: qItem._id, question: qItem.question })}
+                onClick={() => saveQuestion({ userId: props.user._id, questionId: qItem._id, question: qItem.question }, props.user.accessToken)}
               >
                 <i className="star icon outline"></i>
               </button>

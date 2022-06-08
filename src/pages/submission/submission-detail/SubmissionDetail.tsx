@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { EssayModel, defaultEssayModel } from '../../../utils/EssayUtils';
-import axios from 'axios';
+import { getEssayByEssayId } from '../../../services/EssayService';
+import { FeedbackModel } from '../../../utils/FeedbackUtils';
+import { getFeedbackListByEssayId } from '../../../services/FeedbackService';
 import { Link, useParams } from "react-router-dom";
-import { Placeholder, Segment, Button, Image, Divider, Grid } from 'semantic-ui-react';
+import { Placeholder, Segment, Button, Divider, Grid } from 'semantic-ui-react';
 import EmptyItemBox from '../../component/empty-item-box/EmptyItemBox';
 import './SubmissionDetail.css';
-
-const BASE_URL = `https://bonufo-express.vercel.app`;
 
 function SubmissionDetail(props) {
 
@@ -19,40 +19,22 @@ function SubmissionDetail(props) {
   });
 
   useEffect(() => {
-    getCurrentEssay(essayId);
-    getFeedbackList(essayId);
-  }, []);
+    getCurrentEssay(essayId, props.user.accessToken);
+    getFeedbackList(essayId, props.user.accessToken);
+  }, [essayId, props.user.accessToken]);
 
-  let getCurrentEssay = async (id: string) => {
+  const getCurrentEssay = async (essayId: string, accessToken: string) => {
     await setPageControl({ ...pageControl, isLoadingEssay: true });
-    axios.get(`${BASE_URL}/essay/${id}`, {
-      headers: { "Authorization": `Bearer ${props.user.accessToken}` }
-    })
-      .then(res => {
-        setCurrentEssay(res.data);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      })
-      .finally(() => {
-        setPageControl({ ...pageControl, isLoadingEssay: false });
-      })
+    const essay = await getEssayByEssayId(essayId, accessToken);
+    if (essay) setCurrentEssay(essay);
+    setPageControl({ ...pageControl, isLoadingEssay: false });
   };
 
-  let getFeedbackList = async (id: string) => {
+  const getFeedbackList = async (essayId: string, accessToken: string) => {
     await setPageControl({ ...pageControl, isLoadingFeedback: true });
-    axios.get(`${BASE_URL}/feedback/by-essay/${id}`, {
-      headers: { "Authorization": `Bearer ${props.user.accessToken}` }
-    })
-      .then(res => {
-        setFeedbackList(res.data);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      })
-      .finally(() => {
-        setPageControl({ ...pageControl, isLoadingFeedback: false });
-      })
+    const feedbackList = await getFeedbackListByEssayId(essayId, accessToken);
+    if (feedbackList) setFeedbackList(feedbackList);
+    setPageControl({ ...pageControl, isLoadingFeedback: false });
   }
 
   return (
@@ -118,26 +100,26 @@ function SubmissionDetail(props) {
                   <>
                     <Grid columns={fItem.sections.length}>
                       <Grid.Row>
-                        {fItem.sections.map((section) =>
-                          <Grid.Column mobile={16} tablet={8} computer={4}>
+                        {fItem.sections.map((sItem, sIndex) =>
+                          <Grid.Column key={sIndex} mobile={16} tablet={8} computer={4}>
                             <div className='feedback-content-box'>
                               <span className='feedback-section-description'>
-                                {section.description}
+                                {sItem.description}
                               </span>
                               <span className='feedback-label-text'>
                                 Score:
                               </span>
                               <span className='feedback-value-text'>
-                                {section.score} / {section.fullScore}
+                                {sItem.score} / {sItem.fullScore}
                               </span>
                             </div>
-                            {section.comment ?
+                            {sItem.comment ?
                               <div className='feedback-content-box'>
                                 <span className='feedback-label-text'>
                                   Comment:
                                 </span>
                                 <p className='feedback-value-text'>
-                                  {section.comment}
+                                  {sItem.comment}
                                 </p>
                               </div>
                               : null}

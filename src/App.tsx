@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { UserControlModel, defaultUserControl } from './utils/UserUtils';
+import { refresh, logout } from './services/UserService';
 import { Image } from 'semantic-ui-react'
 import jwt_decode from 'jwt-decode';
-import axios from 'axios';
 import Logo from '../src/assets/logo.png';
 import Home from './pages/home/Home';
 import About from './pages/about/About';
@@ -15,8 +15,6 @@ import SubmissionDetail from './pages/submission/submission-detail/SubmissionDet
 import NotFound from './pages/not-found/NotFound';
 import Landing from './pages/landing/Landing';
 import './App.css';
-
-const BASE_URL = `https://bonufo-express.vercel.app`;
 
 function App() {
 
@@ -40,38 +38,25 @@ function App() {
   }, [counter]);
   */
 
-  let getAccessToken = () => {
-    axios.get(`${BASE_URL}/user/refresh`, {
-      withCredentials: true,
-    })
-      .then(res => {
-        console.log(res);
-        let decodedUser: UserControlModel = jwt_decode(res.data.accessToken);
-        decodedUser.accessToken = res.data.accessToken;
-        setUser({ ...user, ...decodedUser, isValid: true });
-      })
-      .catch((err) => {
-        console.log(err.message);
-      })
+  const getAccessToken = async () => {
+    const token = await refresh();
+    if (token) {
+      let decodedUser: UserControlModel = jwt_decode(token.accessToken);
+      decodedUser.accessToken = token.accessToken;
+      setUser({ ...user, ...decodedUser, isValid: true });
+    }
   }
 
-  let handleSuccessLogin = (accessToken) => {
+  const handleSuccessLogin = (accessToken) => {
     let decodedUser: UserControlModel = jwt_decode(accessToken);
     if (decodedUser) {
       setUser({ ...user, ...decodedUser, accessToken: accessToken, isValid: true });
     }
   }
 
-  let handleLogout = () => {
-    axios.get(`${BASE_URL}/user/logout`, {
-      withCredentials: true,
-    })
-      .then(() => {
-        setUser({ ...user, ...defaultUserControl, isValid: false });
-      })
-      .catch((err) => {
-        console.log(err.message);
-      })
+  const handleLogout = async () => {
+    await logout;
+    setUser({ ...user, ...defaultUserControl, isValid: false });
   }
 
   return (

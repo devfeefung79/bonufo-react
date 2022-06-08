@@ -1,7 +1,7 @@
 import { MarkingSchemeSectionModel } from './EssayUtils';
 
 interface FeedbackSectionModel extends MarkingSchemeSectionModel {
-  score: number;
+  score?: number;
   comment?: string;
 }
 
@@ -12,7 +12,7 @@ export interface FeedbackModel {
   submitterId: string;
   submitterName: string;
   submitterDateTime?: Date;
-  sections: Array<FeedbackSectionModel>;
+  sections?: Array<FeedbackSectionModel>;
   overallComment?: string;
   totalScore: number;
 }

@@ -19,24 +19,26 @@ function SavedQuestion(props: Props) {
       {props.savedQuestions && props.savedQuestions.length !== 0 ?
         props.savedQuestions.map((sItem, sIndex, sArray) =>
           <>
-            <table className='profile-table'>
-              <tr>
-                <td>
-                  <p>#{sIndex + 1}</p>
-                </td>
-                <td>
-                  <Link to={`/question/${sItem.questionId}`}>
-                    <p>{sItem.question}</p>
-                  </Link>
-                </td>
-                <td>
-                  <button onClick={() => props.unsaveQuestion(props.userId, sItem.questionId)}>
-                    <i className="star icon"></i>
-                  </button>
-                </td>
-              </tr>
+            <table className='profile-table' key={sIndex}>
+              <tbody>
+                <tr>
+                  <td>
+                    <p>#{sIndex + 1}</p>
+                  </td>
+                  <td>
+                    <Link to={`/question/${sItem.questionId}`}>
+                      <p>{sItem.question}</p>
+                    </Link>
+                  </td>
+                  <td>
+                    <button onClick={() => props.unsaveQuestion(props.userId, sItem.questionId)}>
+                      <i className="star icon"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
             </table>
-            {sIndex != sArray.length - 1 ?
+            {sIndex !== sArray.length - 1 ?
               <Divider className='profile-divider' />
               : null}
           </>

@@ -1,54 +1,38 @@
 import { useState, useEffect } from 'react';
-import {
-  EssayModel,
-  defaultEssayModel,
-  MarkingSchemeModel,
-  defaultMarkingSchemeModel
-} from '../../../utils/EssayUtils';
+import { EssayModel, defaultEssayModel, MarkingSchemeModel, defaultMarkingSchemeModel } from '../../../utils/EssayUtils';
+import { getEssayByEssayId, getMarkingSchemeById } from '../../../services/EssayService';
 import { FeedbackModel, defaultFeedbackModel, AddFeedbackRequestBody } from '../../../utils/FeedbackUtils';
-import axios from 'axios';
+import { addFeedback } from '../../../services/FeedbackService';
 import { useHistory, useParams } from "react-router-dom";
-import { Button, Table, Form, Input, Icon, Segment, Grid, GridColumn, TextArea } from 'semantic-ui-react';
+import { Button, Table, Form, Input, Segment, Grid, TextArea } from 'semantic-ui-react';
 import './GiveFeedback.css';
-
-const BASE_URL = `https://bonufo-express.vercel.app`;
 
 function GiveFeedback(props) {
 
   let history = useHistory();
-  let { essayId } = useParams<{ essayId: string }>();
 
-  let [currentEssay, setCurrentEssay] = useState<EssayModel>(defaultEssayModel);
-  let [currentMarkingScheme, setCurrentMarkingScheme] = useState<MarkingSchemeModel>(defaultMarkingSchemeModel);
-  let [markingForm, setMarkingForm] = useState<FeedbackModel>(defaultFeedbackModel);
+  const { essayId } = useParams<{ essayId: string }>();
+  const [currentEssay, setCurrentEssay] = useState<EssayModel>(defaultEssayModel);
+  const [currentMarkingScheme, setCurrentMarkingScheme] = useState<MarkingSchemeModel>(defaultMarkingSchemeModel);
+  const [markingForm, setMarkingForm] = useState<FeedbackModel>(defaultFeedbackModel);
 
   useEffect(() => {
-    getCurrEssay(essayId);
-  }, []);
+    getCurrentEssay(essayId, props.user.accessToken);
+  }, [essayId, props.user.accessToken]);
 
-  let getCurrEssay = (id: string) => {
-    axios.get(`${BASE_URL}/essay/${id}`, {
-      headers: {
-        "Authorization": `Bearer ${props.user.accessToken}`
+  const getCurrentEssay = async (essayId: string, accessToken: string) => {
+    const essay = await getEssayByEssayId(essayId, accessToken);
+    if (essay) setCurrentEssay(essay);
+    if (essay.markingSchemeId && essay.markingSchemeId !== '') {
+      const markingScheme = await getMarkingSchemeById(essay.markingSchemeId, accessToken);
+      if (markingScheme) {
+        setCurrentMarkingScheme(markingScheme);
+        setMarkingForm({ ...markingForm, sections: markingScheme.sections });
       }
-    })
-      .then(res => {
-        setCurrentEssay(res.data);
-        if (res.data.markingSchemeId && res.data.markingSchemeId !== '') {
-          axios.get(`${BASE_URL}/essay/marking-scheme/${res.data.markingSchemeId}`, {
-            headers: {
-              "Authorization": `Bearer ${props.user.accessToken}`
-            }
-          })
-            .then(res => {
-              setCurrentMarkingScheme(res.data);
-              setMarkingForm({ ...markingForm, sections: res.data.sections });
-            })
-        }
-      })
+    }
   };
 
-  let updateTotalScore = () => {
+  const updateTotalScore = () => {
     let newScore = 0;
     if (currentMarkingScheme && currentMarkingScheme.calculationMode) {
       for (let i = 0; i < markingForm.sections.length; i++) {
@@ -65,24 +49,24 @@ function GiveFeedback(props) {
     setMarkingForm({ ...markingForm, totalScore: newScore });
   }
 
-  let onChangeSectionScore = async (e, { value }, sIndex) => {
+  const onChangeSectionScore = async (e, { value }, sIndex) => {
     let newSection = markingForm.sections;
     newSection[sIndex].score = parseFloat(value);
     await setMarkingForm({ ...markingForm, sections: newSection });
     updateTotalScore();
   };
 
-  let onChangeSectionComment = (e, { value }, sIndex) => {
+  const onChangeSectionComment = (e, { value }, sIndex) => {
     let newSection = markingForm.sections;
     newSection[sIndex].comment = value;
     setMarkingForm({ ...markingForm, sections: newSection });
   };
 
-  let onChangeOverallComment = (e, { value }) => {
+  const onChangeOverallComment = (e, { value }) => {
     setMarkingForm({ ...markingForm, overallComment: value });
   }
 
-  let handleSubmit = () => {
+  const handleSubmit = async (essayId: string, accessToken: string) => {
     let newFeedback: AddFeedbackRequestBody = {
       essayId: essayId,
       essay: currentEssay.content,
@@ -96,15 +80,8 @@ function GiveFeedback(props) {
     if (markingForm.overallComment && markingForm.overallComment !== '') {
       newFeedback.overallComment = markingForm.overallComment;
     }
-    axios.post(`/feedback/add`, newFeedback, {
-      headers: { "Authorization": `Bearer ${props.user.accessToken}` }
-    })
-      .then(res => {
-        history.push(`/submission/${essayId}`);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      })
+    const feedback = await addFeedback(newFeedback, accessToken);
+    if (feedback) history.push(`/submission/${essayId}`);
   }
 
   return (
@@ -200,7 +177,7 @@ function GiveFeedback(props) {
               <Button
                 className='feedback-form-submit-btn'
                 type='submit'
-                onClick={() => handleSubmit()}>
+                onClick={() => handleSubmit(essayId, props.user.accessToken)}>
                 Submit
               </Button>
             </Form>

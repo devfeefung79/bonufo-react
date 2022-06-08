@@ -1,8 +1,8 @@
-import axios from 'axios';
-import { EssayModel, MarkingSchemeModel } from '../utils/EssayUtils';
+import { axiosPrivate } from '../utils/ServiceUtils';
+import { EssayModel, MarkingSchemeModel, AddEssayRequestBody } from '../utils/EssayUtils';
 
-export let getEssayByEssayId = async (essayId: string): Promise<EssayModel | undefined> => {
-  const data = await axios.get(`/essay/${essayId}`)
+export const getEssayByEssayId = async (essayId: string, accessToken: string): Promise<EssayModel | undefined> => {
+  const data = await axiosPrivate(accessToken).get(`/essay/${essayId}`)
     .then(res => {
       return res.data;
     })
@@ -12,8 +12,8 @@ export let getEssayByEssayId = async (essayId: string): Promise<EssayModel | und
   return data;
 };
 
-export let getEssayListByQuestionId = async (questionId: string): Promise<Array<EssayModel> | undefined> => {
-  const data = await axios.get(`/essay/by-question/${questionId}`)
+export const getEssayListByQuestionId = async (questionId: string, accessToken: string): Promise<Array<EssayModel> | undefined> => {
+  const data = await axiosPrivate(accessToken).get(`/essay/by-question/${questionId}`)
     .then(res => {
       return res.data;
     })
@@ -23,8 +23,42 @@ export let getEssayListByQuestionId = async (questionId: string): Promise<Array<
   return data;
 };
 
-export let getMarkingSchemeList = async (): Promise<Array<MarkingSchemeModel> | undefined> => {
-  const data = await axios.get(`/essay/marking-scheme`)
+export const getEssayListByUserId = async (userId: string, accessToken: string): Promise<Array<EssayModel> | undefined> => {
+  const data = await axiosPrivate(accessToken).get(`/essay/by-user/${userId}`)
+    .then(res => {
+      return res.data;
+    })
+    .catch((err) => {
+      console.log(err.message);
+    })
+  return data;
+};
+
+
+export const getMarkingSchemeById = async (markingSchemeId: string, accessToken: string): Promise<MarkingSchemeModel | undefined> => {
+  const data = await axiosPrivate(accessToken).get(`/essay/marking-scheme/${markingSchemeId}`)
+    .then(res => {
+      return res.data;
+    })
+    .catch((err) => {
+      console.log(err.message);
+    })
+  return data;
+};
+
+export const getMarkingSchemeList = async (accessToken: string): Promise<Array<MarkingSchemeModel> | undefined> => {
+  const data = await axiosPrivate(accessToken).get(`/essay/marking-scheme/all`)
+    .then(res => {
+      return res.data;
+    })
+    .catch((err) => {
+      console.log(err.message);
+    })
+  return data;
+};
+
+export const addEssay = async (AddFeedbackRequestBody: AddEssayRequestBody, accessToken: string): Promise<EssayModel | undefined> => {
+  const data = await axiosPrivate(accessToken).post(`/essay/add`, AddFeedbackRequestBody)
     .then(res => {
       return res.data;
     })

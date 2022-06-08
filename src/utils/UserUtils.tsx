@@ -14,6 +14,10 @@ export interface UserControlModel extends UserModel {
   isValid: boolean;
 }
 
+export interface AccessToken {
+  accessToken: string;
+}
+
 export const defaultUser: UserModel = {
   _id: '',
   username: '',

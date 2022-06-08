@@ -1,20 +1,14 @@
-import axios, { AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
+import { axiosPrivate } from '../utils/ServiceUtils';
 import { SearchFormRequestBody } from '../utils/FormUtils';
 import { QuestionModel, QuestionTagModel, SavedQuestionModel } from '../utils/QuestionUtils';
 
-const BASE_URL = `https://bonufo-express.vercel.app`;
-
 /* Question */
 
-export let getQuestionList = async (accessToken): Promise<Array<QuestionModel> | undefined> => {
-  const data = await axios.get(`${BASE_URL}/question/all`, {
-    headers: {
-      "access-control-allow-origin": "*",
-      "Authorization": `Bearer ${accessToken}`
-    }
-  })
+export const getQuestionById = async (id: string, accessToken: string): Promise<QuestionModel | undefined> => {
+  const data = await axiosPrivate(accessToken).get(`/question/${id}`)
     .then(res => {
-      return res.data;;
+      return res.data;
     })
     .catch((err) => {
       console.log(err.message);
@@ -22,10 +16,20 @@ export let getQuestionList = async (accessToken): Promise<Array<QuestionModel> |
   return data;
 };
 
-export let getQuestionListByFilter = async (requestBody: SearchFormRequestBody, accessToken): Promise<Array<QuestionModel> | undefined> => {
-  const data = await axios.post(`${BASE_URL}/question/search`, requestBody, {
-    headers: { "access-control-allow-origin": "*", "Authorization": `Bearer ${accessToken}` }
-  })
+
+export const getQuestionList = async (accessToken: string): Promise<Array<QuestionModel> | undefined> => {
+  const data = await axiosPrivate(accessToken).get(`/question/all`)
+    .then(res => {
+      return res.data;
+    })
+    .catch((err) => {
+      console.log(err.message);
+    })
+  return data;
+};
+
+export const getQuestionListByFilter = async (requestBody: SearchFormRequestBody, accessToken: string): Promise<Array<QuestionModel> | undefined> => {
+  const data = await axiosPrivate(accessToken).post(`/question/search`, requestBody)
     .then(res => {
       return res.data;
     })
@@ -37,10 +41,8 @@ export let getQuestionListByFilter = async (requestBody: SearchFormRequestBody, 
 
 /* Question Tag Dropdown List */
 
-export let getTopicList = async (accessToken): Promise<Array<QuestionTagModel> | undefined> => {
-  const data = await axios.get(`${BASE_URL}/question/topics`, {
-    headers: { "access-control-allow-origin": "*", "Authorization": `Bearer ${accessToken}` }
-  })
+export const getTopicList = async (accessToken: string): Promise<Array<QuestionTagModel> | undefined> => {
+  const data = await axiosPrivate(accessToken).get(`/question/topics`)
     .then(res => {
       return res.data;
     })
@@ -50,10 +52,8 @@ export let getTopicList = async (accessToken): Promise<Array<QuestionTagModel> |
   return data;
 };
 
-export let getQuestionTypeList = async (accessToken): Promise<Array<QuestionTagModel> | undefined> => {
-  const data = await axios.get(`${BASE_URL}/question/question-types`, {
-    headers: { "access-control-allow-origin": "*", "Authorization": `Bearer ${accessToken}` }
-  })
+export const getQuestionTypeList = async (accessToken: string): Promise<Array<QuestionTagModel> | undefined> => {
+  const data = await axiosPrivate(accessToken).get(`/question/question-types`)
     .then(res => {
       return res.data;
     })
@@ -63,10 +63,8 @@ export let getQuestionTypeList = async (accessToken): Promise<Array<QuestionTagM
   return data;
 };
 
-export let getExamList = async (accessToken): Promise<Array<QuestionTagModel> | undefined> => {
-  const data = await axios.get(`${BASE_URL}/question/exams`, {
-    headers: { "access-control-allow-origin": "*", "Authorization": `Bearer ${accessToken}` }
-  })
+export const getExamList = async (accessToken: string): Promise<Array<QuestionTagModel> | undefined> => {
+  const data = await axiosPrivate(accessToken).get(`/question/exams`)
     .then(res => {
       return res.data;
     })
@@ -78,10 +76,8 @@ export let getExamList = async (accessToken): Promise<Array<QuestionTagModel> | 
 
 /* Saved Question */
 
-export let getSavedQuestionListByUserId = async (userId: string, accessToken): Promise<Array<SavedQuestionModel> | undefined> => {
-  const data = await axios.get(`${BASE_URL}/question/saved-questions/${userId}`, {
-    headers: { "access-control-allow-origin": "*", "Authorization": `Bearer ${accessToken}` }
-  })
+export const getSavedQuestionListByUserId = async (userId: string, accessToken: string): Promise<Array<SavedQuestionModel> | undefined> => {
+  const data = await axiosPrivate(accessToken).get(`/question/saved-questions/${userId}`)
     .then(res => {
       return res.data;
     })
@@ -91,10 +87,8 @@ export let getSavedQuestionListByUserId = async (userId: string, accessToken): P
   return data;
 };
 
-export let addSavedQuestion = async (savedQuestionData: { userId: string, questionId: string, question: string }, accessToken): Promise<SavedQuestionModel | undefined> => {
-  const data = await axios.post(`${BASE_URL}/question/save`, savedQuestionData, {
-    headers: { "access-control-allow-origin": "*", "Authorization": `Bearer ${accessToken}` }
-  })
+export const addSavedQuestion = async (savedQuestionData: { userId: string, questionId: string, question: string }, accessToken): Promise<SavedQuestionModel | undefined> => {
+  const data = await axiosPrivate(accessToken).post(`/question/save`, savedQuestionData)
     .then(res => {
       return res.data;
     })
@@ -104,10 +98,8 @@ export let addSavedQuestion = async (savedQuestionData: { userId: string, questi
   return data;
 };
 
-export let deleteSavedQuestion = async (savedQuestionData: { userId: string, questionId: string }, accessToken): Promise<AxiosResponse | undefined> => {
-  const data = await axios.delete(`/question/unsave/${savedQuestionData.userId}/${savedQuestionData.questionId}`, {
-    headers: { "access-control-allow-origin": "*", "Authorization": `Bearer ${accessToken}` }
-  })
+export const deleteSavedQuestion = async (userId: string, questionId: string, accessToken): Promise<AxiosResponse | undefined> => {
+  const data = await axiosPrivate(accessToken).delete(`/question/unsave/${userId}/${questionId}`)
     .then(res => {
       return res.data;
     })

@@ -1,58 +1,40 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import { QuestionModel } from '../../../utils/QuestionUtils';
+import { getQuestionById } from '../../../services/QuestionService';
+import { EssayModel } from '../../../utils/EssayUtils';
+import { getEssayListByQuestionId } from '../../../services/EssayService';
 import { Link, useParams } from "react-router-dom";
-import { Segment, Divider, Button, Label, Placeholder, Image } from 'semantic-ui-react';
+import { Segment, Divider, Button, Label, Placeholder } from 'semantic-ui-react';
 import EmptyItemBox from '../../component/empty-item-box/EmptyItemBox';
 import './QuestionDetail.css';
-
-const BASE_URL = `https://bonufo-express.vercel.app`;
 
 function QuestionDetail(props) {
 
   const { questionId } = useParams<{ questionId: string }>();
   const [currentQuestion, setCurrentQuestion] = useState<QuestionModel>();
-  const [submissionList, setSubmissionList] = useState([]);
+  const [submissionList, setSubmissionList] = useState<Array<EssayModel>>([]);
   const [pageControl, setPageControl] = useState({
     isLoadingQuestion: false,
     isLoadingSubmission: false,
   })
 
   useEffect(() => {
-    getcurrentQuestion(questionId);
-    getSubmissionList();
+    getcurrentQuestion(questionId, props.user.accessToken);
+    getSubmissionList(questionId, props.user.accessToken);
   }, []);
 
-  let getcurrentQuestion = async (id: string) => {
+  const getcurrentQuestion = async (questionId: string, accessToken: string) => {
     await setPageControl({ ...pageControl, isLoadingQuestion: true });
-    axios.get(`${BASE_URL}/question/${id}`, {
-      headers: { "Authorization": `Bearer ${props.user.accessToken}` }
-    })
-      .then(res => {
-        setCurrentQuestion(res.data);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      })
-      .finally(() => {
-        setPageControl({ ...pageControl, isLoadingQuestion: false });
-      })
+    const question = await getQuestionById(questionId, accessToken);
+    if (question) setCurrentQuestion(question);
+    setPageControl({ ...pageControl, isLoadingQuestion: false });
   };
 
-  let getSubmissionList = async () => {
+  const getSubmissionList = async (questionId: string, accessToken: string) => {
     await setPageControl({ ...pageControl, isLoadingSubmission: true });
-    axios.get(`${BASE_URL}/essay/by-question/${questionId}`, {
-      headers: { "Authorization": `Bearer ${props.user.accessToken}` }
-    })
-      .then(res => {
-        setSubmissionList(res.data);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      })
-      .finally(() => {
-        setPageControl({ ...pageControl, isLoadingSubmission: false });
-      })
+    const submissionList = await getEssayListByQuestionId(questionId, accessToken);
+    if (submissionList) setSubmissionList(submissionList);
+    setPageControl({ ...pageControl, isLoadingSubmission: false });
   }
 
   return (

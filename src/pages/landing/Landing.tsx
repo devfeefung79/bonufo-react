@@ -7,7 +7,7 @@ import {
 } from '../../utils/FormUtils';
 import './Landing.css';
 
-const BASE_URL = `https://bonufo-express.vercel.app`;
+const BASE_URL = `http://localhost:3001`;
 
 function Landing(props) {
 
@@ -17,31 +17,31 @@ function Landing(props) {
   const [registerFormControl, setRegisterFormControl] = useState(defaultRegisterFormControl);
   const [loginFormControl, setLoginFormControl] = useState(defaultLoginFormControl);
 
-  let onChangeLoginUsernameEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeLoginUsernameEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLoginFormData({ ...loginFormData, usernameEmail: e.target.value });
   }
 
-  let onChangeLoginPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeLoginPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLoginFormData({ ...loginFormData, password: e.target.value });
   }
 
-  let onChangeRegUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeRegUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
     setRegisterFormData({ ...registerFormData, username: e.target.value });
   }
 
-  let onChangeRegEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeRegEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setRegisterFormData({ ...registerFormData, email: e.target.value });
   }
 
-  let onChangeRegPw = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeRegPw = (e: React.ChangeEvent<HTMLInputElement>) => {
     setRegisterFormData({ ...registerFormData, password: e.target.value });
   }
 
-  let onChangeRegConfirmPw = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeRegConfirmPw = (e: React.ChangeEvent<HTMLInputElement>) => {
     setRegisterFormData({ ...registerFormData, confirmPassword: e.target.value });
   }
 
-  let onChangeRegRoleLearner = () => {
+  const onChangeRegRoleLearner = () => {
     setRegisterFormData({
       ...registerFormData, role: {
         learner: true,
@@ -50,7 +50,7 @@ function Landing(props) {
     });
   }
 
-  let onChangeRegRoleTutor = () => {
+  const onChangeRegRoleTutor = () => {
     setRegisterFormData({
       ...registerFormData, role: {
         learner: false,
@@ -59,16 +59,16 @@ function Landing(props) {
     });
   }
 
-  let onChangeRegTerm = () => {
-    var nextValue = registerFormData.termCondition === true ? false : true;
+  const onChangeRegTerm = () => {
+    const nextValue = registerFormData.termCondition === true ? false : true;
     setRegisterFormData({ ...registerFormData, termCondition: nextValue });
   }
 
-  let handleRegister = (formControlDefault) => {
-    const isPass = validateRegisterForm(formControlDefault);
+  const handleRegister = (formControlDefault) => {
+    let isPass = validateRegisterForm(formControlDefault);
     if (isPass) {
-      let roleStr = registerFormData.role.learner ? 'Learner' : 'Tutor';
-      let requestBody: RegisterFormRequestBody = {
+      const roleStr = registerFormData.role.learner ? 'Learner' : 'Tutor';
+      const requestBody: RegisterFormRequestBody = {
         username: registerFormData.username,
         email: registerFormData.email,
         password: registerFormData.password,
@@ -156,7 +156,7 @@ function Landing(props) {
     return checkFormError.messageList && checkFormError.messageList.length === 0 ? true : false;
   }
 
-  let handleLogin = (formControlDefault) => {
+  const handleLogin = (formControlDefault) => {
     const isPass = validateLoginForm(formControlDefault);
     let requestBody: LoginFormRequestBody = {
       password: loginFormData.password,
@@ -170,7 +170,7 @@ function Landing(props) {
     if (isPass) requestLogin(requestBody);
   }
 
-  let requestLogin = (requestBody: LoginFormRequestBody) => {
+  const requestLogin = (requestBody: LoginFormRequestBody) => {
     axios.post(`${BASE_URL}/user/login`, requestBody, {
       withCredentials: true,
     })
@@ -182,7 +182,7 @@ function Landing(props) {
       })
   }
 
-  let validateLoginForm = (formControlDefault): boolean => {
+  const validateLoginForm = (formControlDefault): boolean => {
     let checkFormError = formControlDefault;
     if (loginFormData.usernameEmail === '' || loginFormData.usernameEmail.length === 0) {
       checkFormError.usernameEmail = true;

@@ -1,13 +1,16 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { EssayModel } from '../../utils/EssayUtils';
+import { getEssayListByUserId } from '../../services/EssayService';
+import { FeedbackModel } from '../../utils/FeedbackUtils';
+import { getFeedbackListByUserId } from '../../services/FeedbackService';
+import { SavedQuestionModel } from '../../utils/QuestionUtils';
+import { getSavedQuestionListByUserId, deleteSavedQuestion } from '../../services/QuestionService';
 import { Image, Button } from 'semantic-ui-react'
 import './Profile.css';
 //import EditSummary from './summary/EditSummary';
 import SavedQuestion from './saved-question/SavedQuestion';
 import SubmissionHistory from './submission-history/SubmissionHistory';
 import FeedbackHistory from './feedback-history/FeedbackHistory';
-
-const BASE_URL = `https://bonufo-express.vercel.app`;
 
 function Profile(props) {
 
@@ -18,71 +21,55 @@ function Profile(props) {
     isLoadingSubmissionList: false,
     isLoadingFeedbackList: false,
   });
-  const [savedQuestions, setSavedQuestions] = useState([]);
-  const [submissionList, setSubmissionList] = useState([]);
-  const [feedbackList, setFeedbackList] = useState([]);
+  const [savedQuestions, setSavedQuestions] = useState<Array<SavedQuestionModel>>([]);
+  const [submissionList, setSubmissionList] = useState<Array<EssayModel>>([]);
+  const [feedbackList, setFeedbackList] = useState<Array<FeedbackModel>>([]);
 
   useEffect(() => {
-    getSavedQuestion(props.user._id);
+    getSavedQuestion(props.user._id, props.user.accessToken);
     switch (props.user.role.toUpperCase()) {
       case 'LEARNER':
-        getSubmissionList(props.user._id);
+        getSubmissionList(props.user._id, props.user.accessToken);
         break;
       case 'TUTOR':
-        getfeedbackList(props.user._id);
+        getfeedbackList(props.user._id, props.user.accessToken);
         break;
     }
-  }, []);
+  }, [props.user._id, props.user.role, props.user.accessToken]);
 
-  let getSubmissionList = (userId: string) => {
-    axios.get(`${BASE_URL}/essay/by-user/${userId}`, {
-      headers: { "Authorization": `Bearer ${props.user.accessToken}` }
-    })
-      .then(res => {
-        setSubmissionList(res.data);
-      })
+  const getSubmissionList = async (userId: string, accessToken: string) => {
+    const submissionList = await getEssayListByUserId(userId, accessToken);
+    if (submissionList) setSubmissionList(submissionList);
   }
 
-  let getfeedbackList = (userId: string) => {
-    axios.get(`${BASE_URL}/feedback/by-user/${userId}`, {
-      headers: { "Authorization": `Bearer ${props.user.accessToken}` }
-    })
-      .then(res => {
-        setFeedbackList(res.data);
-      })
+  const getfeedbackList = async (userId: string, accessToken: string) => {
+    const feedbackList = await getFeedbackListByUserId(userId, accessToken);
+    if (feedbackList) setFeedbackList(feedbackList);
   }
 
-  let getSavedQuestion = (userId) => {
-    axios.get(`${BASE_URL}/question/saved-questions/${userId}`, {
-      headers: { "Authorization": `Bearer ${props.user.accessToken}` }
-    })
-      .then(res => {
-        setSavedQuestions(res.data);
-      })
+  const getSavedQuestion = async (userId: string, accessToken: string) => {
+    const savedQuestionList = await getSavedQuestionListByUserId(userId, accessToken);
+    if (savedQuestionList) setSavedQuestions(savedQuestionList);
   }
 
-  let unsaveQuestion = (userId: string, questionId: string) => {
-    axios.delete(`${BASE_URL}/question/unsave/${userId}/${questionId}`, {
-      headers: { "Authorization": `Bearer ${props.user.accessToken}` }
-    })
-      .then(res => {
-        getSavedQuestion(userId);
-      })
+  const unsaveQuestion = async (userId: string, questionId: string, accessToken: string) => {
+    await deleteSavedQuestion(userId, questionId, accessToken);
+    getSavedQuestion(userId, accessToken);
   }
 
-  let handleOpenModal = () => {
+  const handleOpenModal = () => {
     setPageControl({ ...pageControl, isShowSummaryModel: true })
   };
 
-  let handleCloseModal = () => {
+  const handleCloseModal = () => {
     setPageControl({ ...pageControl, isShowSummaryModel: false })
   }
 
-  let handleLogout = () => {
+  const handleLogout = () => {
     props.handleLogout();
   }
 
-  let handleAccordionActiveList = (index) => {
+  const handleAccordionActiveList = (index) => {
     let newActiveList = pageControl.isAccordionActiveList;
     let foundIndex = newActiveList.findIndex((elem) => elem === index);
     if (foundIndex !== -1) {
@@ -144,10 +131,10 @@ function Profile(props) {
         </>*/}
         </div>
         <SavedQuestion
-          isLoading={false}
+          isLoading={pageControl.isLoadingSavedQuestion}
           userId={props.user._id}
           savedQuestions={savedQuestions}
-          unsaveQuestion={(userId, questionId) => unsaveQuestion(userId, questionId)}
+          unsaveQuestion={(userId, questionId) => unsaveQuestion(userId, questionId, props.user.accessToken)}
         />
         {props && props.user && props.user.role === 'Learner' ?
           <SubmissionHistory

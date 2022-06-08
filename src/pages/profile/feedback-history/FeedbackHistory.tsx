@@ -21,47 +21,50 @@ function FeedbackHistory(props: Props) {
         props.feedbackList.map((fItem, fIndex, fArray) =>
           <>
             <table className='profile-feedback-history-table' key={fIndex}>
-              <tr>
-                <td>
-                  <p>#{fIndex + 1}</p>
-                </td>
-                <td>
-                  <Accordion
-                    fluid styled
-                    className='profile-accordion'>
-                    <Accordion.Title
-                      index={fIndex}
-                      onClick={() => props.handleAccordionActiveList(fIndex)}>
-                      <Icon name='dropdown' />
-                      Submission
-                    </Accordion.Title>
-                    <Accordion.Content active={props.isAccordionActiveList.includes(fIndex)}>
-                      <Link to={`/submission/${fItem.essayId}`}>
-                        <p>{fItem.essay}</p>
-                      </Link>
-                    </Accordion.Content>
-                  </Accordion>
-                  <table className='profile-feedback-section-table'>
-                    {fItem.sections && fItem.sections.map((section) =>
+              <tbody>
+                <tr>
+                  <td>
+                    <p>#{fIndex + 1}</p>
+                  </td>
+                  <td>
+                    <Accordion
+                      fluid styled
+                      className='profile-accordion'>
+                      <Accordion.Title
+                        key={fIndex}
+                        index={fIndex}
+                        onClick={() => props.handleAccordionActiveList(fIndex)}>
+                        <Icon name='dropdown' />
+                        Submission
+                      </Accordion.Title>
+                      <Accordion.Content active={props.isAccordionActiveList.includes(fIndex)}>
+                        <Link to={`/submission/${fItem.essayId}`}>
+                          <p>{fItem.essay}</p>
+                        </Link>
+                      </Accordion.Content>
+                    </Accordion>
+                    <table className='profile-feedback-section-table'>
+                      {fItem.sections && fItem.sections.map((sItem, sIndex) =>
+                        <tr key={sIndex}>
+                          <td>{sItem.description}</td>
+                          <td>{sItem.comment}</td>
+                          <td>{sItem.score} / {sItem.fullScore}</td>
+                        </tr>
+                      )}
                       <tr>
-                        <td>{section.description}</td>
-                        <td>{section.comment}</td>
-                        <td>{section.score} / {section.fullScore}</td>
+                        <td>Overall Comment</td>
+                        <td colSpan={2}>{fItem.overallComment}</td>
                       </tr>
-                    )}
-                    <tr>
-                      <td>Overall Comment</td>
-                      <td colSpan={2}>{fItem.overallComment}</td>
-                    </tr>
-                    <tr>
-                      <td colSpan={2}>Total Score</td>
-                      <td>{fItem.totalScore}</td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
+                      <tr>
+                        <td colSpan={2}>Total Score</td>
+                        <td>{fItem.totalScore}</td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </tbody>
             </table>
-            {fIndex != fArray.length - 1 ?
+            {fIndex !== fArray.length - 1 ?
               <Divider className='profile-divider' />
               : null}
           </>

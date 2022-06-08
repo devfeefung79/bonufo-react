@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import { QuestionModel, defaultQuestionModel } from '../../../utils/QuestionUtils';
+import { getQuestionById } from '../../../services/QuestionService';
 import { MarkingSchemeModel, defaultMarkingSchemeModel, AddEssayRequestBody } from '../../../utils/EssayUtils';
+import { getMarkingSchemeList, addEssay } from '../../../services/EssayService';
 import { useHistory, useParams } from "react-router-dom";
 import { Button, Table, Form, Accordion, Icon, Segment } from 'semantic-ui-react';
 import './WriteEssay.css';
-
-const BASE_URL = `https://bonufo-express.vercel.app`;
 
 interface WriteEssayForm {
   currentMarkingScheme: MarkingSchemeModel;
@@ -33,49 +32,43 @@ function WriteEssay(props) {
   });
 
   useEffect(() => {
-    getCurrQuestion(questionId);
-    getAllMarkingScheme();
-  }, []);
+    getCurrentQuestion(questionId, props.user.accessToken);
+    getAllMarkingScheme(props.user.accessToken);
+  }, [questionId, props.user.accessToken]);
 
-  let getCurrQuestion = (id: string) => {
-    axios.get(`${BASE_URL}/question/${id}`, {
-      headers: { "Authorization": `Bearer ${props.user.accessToken}` }
-    })
-      .then(res => {
-        setCurrentQuestion(res.data);
-      })
+  const getCurrentQuestion = async (questionId: string, accessToken: string) => {
+    const question = await getQuestionById(questionId, accessToken);
+    if (question) setCurrentQuestion(question);
   };
 
-  let getAllMarkingScheme = () => {
-    axios.get(`${BASE_URL}/essay/marking-scheme/all`, {
-      headers: { "Authorization": `Bearer ${props.user.accessToken}` }
-    })
-      .then(res => {
-        let optList = [];
-        for (let i = 0; i < res.data.length; i++) {
-          let opt = {
-            key: res.data[i]._id,
-            text: res.data[i].name,
-            value: res.data[i].name,
-          }
-          optList.push(opt);
+  const getAllMarkingScheme = async (accessToken: string) => {
+    const markingSchemeList = await getMarkingSchemeList(accessToken);
+    if (markingSchemeList) {
+      let optList = [];
+      for (let i = 0; i < markingSchemeList.length; i++) {
+        let opt = {
+          key: markingSchemeList[i]._id,
+          text: markingSchemeList[i].name,
+          value: markingSchemeList[i].name,
         }
-        setMarkingSchemeOptions(optList);
-        setMarkingSchemeList(res.data);
-      })
+        optList.push(opt);
+      }
+      setMarkingSchemeOptions(optList);
+      setMarkingSchemeList(markingSchemeList);
+    }
   };
 
-  let onChangeMarkingScheme = (e, { value }) => {
+  const onChangeMarkingScheme = (e, { value }) => {
     let schemaIdx = markingSchemeList.findIndex((dItem) => dItem.name === value);
     if (schemaIdx !== -1) setWriteEssayForm({ ...writeEssayForm, currentMarkingScheme: markingSchemeList[schemaIdx] });
   }
 
-  let toggleMarkingArea = () => {
-    let nextValue = pageControl.isMarkingAreaActice ? false : true;
+  const toggleMarkingArea = () => {
+    const nextValue = pageControl.isMarkingAreaActice ? false : true;
     setPageControl({ ...pageControl, isMarkingAreaActice: nextValue });
   }
 
-  let onChangeResponseText = (e) => {
+  const onChangeResponseText = (e) => {
     setWriteEssayForm({
       ...writeEssayForm,
       responseText: e.target.value,
@@ -83,12 +76,12 @@ function WriteEssay(props) {
     });
   }
 
-  let getWordCount = (text: String): number => {
-    let txtArray = text.split(" ");
+  const getWordCount = (text: String): number => {
+    const txtArray = text.split(" ");
     return txtArray.length;
   }
 
-  let handleSubmit = (action: string) => {
+  const handleSubmit = async (action: string, accessToken: string) => {
     setPageControl({ ...pageControl, isFormLoading: true });
     if (writeEssayForm && writeEssayForm.responseText !== '') {
       let state: string;
@@ -102,7 +95,7 @@ function WriteEssay(props) {
         default:
           state = "draft"
       }
-      let newEssay: AddEssayRequestBody = {
+      const newEssay: AddEssayRequestBody = {
         questionId: currentQuestion._id,
         question: currentQuestion.question,
         submitterId: props.user._id,
@@ -113,17 +106,10 @@ function WriteEssay(props) {
         content: writeEssayForm.responseText,
         wordCount: writeEssayForm.wordCount
       }
-      axios.post(`${BASE_URL}/essay/add`, newEssay, {
-        headers: { "Authorization": `Bearer ${props.user.accessToken}` }
-      })
-        .then(res => {
-          setPageControl({ ...pageControl, isFormLoading: false });
-          history.push(`${BASE_URL}/submission/${res.data._id}`);
-        })
-        .catch((err) => {
-          console.log(err.message);
-        })
+      const essay = await addEssay(newEssay, accessToken);
+      if (essay) history.push(`/submission/${essay._id}`);
     }
+    setPageControl({ ...pageControl, isFormLoading: false });
   }
 
   return (
@@ -188,8 +174,8 @@ function WriteEssay(props) {
                       </Table.Header>
                       <Table.Body>
                         {writeEssayForm.currentMarkingScheme.sections
-                          .map((mItem) => (
-                            <Table.Row>
+                          .map((mItem, mIndex) => (
+                            <Table.Row key={mIndex}>
                               <Table.Cell width={3}
                                 className="marking-scheme-table-emphasize">
                                 <b>{mItem.description}</b>
@@ -225,7 +211,7 @@ function WriteEssay(props) {
         <Button
           className='response-form-submit-btn'
           type='submit'
-          onClick={() => handleSubmit("submit")}>
+          onClick={() => handleSubmit("submit", props.user.accessToken)}>
           Submit
         </Button>
         {/*
