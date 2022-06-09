@@ -3,13 +3,13 @@ import { axiosPublic } from '../utils/ServiceUtils';
 import { AccessToken } from '../utils/UserUtils';
 import { RegisterFormRequestBody, LoginFormRequestBody } from '../utils/FormUtils';
 
-export const register = async (requestBody: RegisterFormRequestBody): Promise<AxiosResponse | undefined> => {
+export const register = async (requestBody: RegisterFormRequestBody): Promise<any | undefined> => {
   const data = await axiosPublic.post(`/user/signup`, requestBody)
     .then(res => {
       return res.data;
     })
     .catch((err) => {
-      return err;
+      return err.response.data.message;
     })
   return data;
 };
@@ -20,7 +20,7 @@ export const login = async (requestBody: LoginFormRequestBody): Promise<string |
       return res.data.accessToken;
     })
     .catch((err) => {
-      console.log(err.message);
+      return err.response.data.message;
     })
   return data;
 };

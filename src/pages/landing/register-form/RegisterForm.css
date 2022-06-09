@@ -1,0 +1,45 @@
+.register-form-segment {
+  padding: 30px 20px 20px !important;
+}
+
+.register-form-heading-text {
+  color: #184270;
+  font-family: "Merriweather", sans-serif;
+  font-weight: bold;
+  font-size: 24px;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-area .ui.error.message {
+  margin-bottom: 0px !important;
+}
+
+.register-form {
+  margin: 20px 5px 30px;
+}
+
+.register-form label {
+  font-size: 14px !important;
+  margin: 10px;
+}
+
+.register-form .ui.input {
+  height: 34px;
+}
+
+.register-form-chx label {
+  margin: 2px !important;
+}
+
+.register-form-chx-req {
+  color: #DB2828;
+}
+
+.register-form-submit-btn {
+  float: right;
+  background-color: #2a6eb7 !important;
+  color: #fff !important;
+  text-shadow: none;
+  background-image: none;
+}

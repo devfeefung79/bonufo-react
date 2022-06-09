@@ -1,0 +1,44 @@
+
+.login-form-segment {
+  padding: 30px 20px 20px !important;
+}
+
+.login-form-heading-text {
+  color: #184270;
+  font-family: "Merriweather", sans-serif;
+  font-weight: bold;
+  font-size: 24px;
+  display: block;
+}
+
+.login-form {
+  margin: 20px 5px 30px;
+}
+
+.login-form label {
+  font-size: 14px !important;
+  margin: 10px;
+}
+
+.login-form .ui.input {
+  height: 34px;
+}
+
+.login-form-submit-btn {
+  float: right;
+  background-color: #2a6eb7 !important;
+  color: #fff !important;
+  text-shadow: none;
+  background-image: none;
+}
+
+.login-form-forgot-pw {
+  display: block;
+  margin-top: 5px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.form-area .ui.error.message {
+  margin-bottom: 0px !important;
+}
