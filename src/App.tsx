@@ -1,6 +1,6 @@
 import jwt_decode from "jwt-decode";
 import { useEffect, useState } from "react";
-import { Link, Route, BrowserRouter as Router, Switch } from "react-router-dom";
+import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
 import { Image } from "semantic-ui-react";
 import Logo from "../src/assets/logo.png";
 import "./App.css";
@@ -50,7 +50,7 @@ function App() {
     };
 
     return (
-        <Router>
+        <BrowserRouter>
             <div className='app-container'>
                 <header className='app-header'>
                     <Link to='/'>
@@ -132,7 +132,7 @@ function App() {
                     </span>
                 </footer>
             </div>
-        </Router>
+        </BrowserRouter>
     );
 }
 
